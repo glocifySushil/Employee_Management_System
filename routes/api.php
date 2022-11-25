@@ -29,6 +29,8 @@ Route::middleware('adminAuthentication')->group(function(){
     Route::apiResource('employees/{id}/documents', EmployeeDocumentController::class);
 });
 
+// Main Things
+
 Route::middleware('auth:api')->group( function () {
    
    Route::post('/logout',[AuthController::class,'logout']);
