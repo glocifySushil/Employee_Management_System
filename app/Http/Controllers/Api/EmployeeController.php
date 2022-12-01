@@ -40,11 +40,15 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeStore $request)
     {
+	
         $validated = $request->validated();
-        //echo "<pre>"; print_r($request->all()); die;
-        $file = $this->storeImage($validated['profile_picture']);
-        unset($validated['profile_picture']);
-        $validated['profile_picture'] = $file;
+			// print_r($validated);
+			// print_r($request->all());die();
+        if(isset($request['profile_picture'])){
+            $file = $this->storeImage($request['profile_picture']);
+            //unset($validated['profile_picture']);
+            $validated['profile_picture'] = $file;
+        }
         $validated['password'] = Hash::make($validated['password']);
         $data = User::create($validated);
         if ($data == true) {
@@ -96,16 +100,16 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->all();
-        if(isset($validated['profile_picture'])){
-            $file = $this->storeImage($validated['profile_picture']);
-        }
-        unset($validated['profile_picture']);
+        // if(isset($validated['profile_picture'])){
+        //     $file = $this->storeImage($validated['profile_picture']);
+        // }
+        // unset($validated['profile_picture']);
         unset($validated['_method']);
-        $validated['profile_picture'] = $file;
-        if(isset($validated['password'])){
-            $validated['password'] = Hash::make($validated['password']);
-        }
-        
+		 unset($validated['password']);
+        // $validated['profile_picture'] = $file;
+        //if(isset($validated['password'])){
+          //  $validated['password'] = Hash::make($validated['password']);
+       // } 
         $data = User::where('id',$id)->update($validated);
         if ($data == true) {
             return response()->json(
@@ -122,7 +126,6 @@ class EmployeeController extends Controller
             );
         }
     }
-
     public function storeImage($image)
     {
         $fileNameWithExt = $image->getClientOriginalName();

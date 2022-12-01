@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\EmployeeAttendenceController;
 use App\Http\Controllers\Api\EmployeeStatusController;
 use App\Http\Controllers\Api\EmployeeDesignationController;
 use App\Http\Controllers\Api\EmployeeDepartmentController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Api\EmployeeDocumentController;
 Route::post('login',[AuthController::class,'login']);
 Route::middleware('adminAuthentication')->group(function(){
     Route::apiResource('employees', EmployeeController::class);
+	Route::apiResource('employees-attendence', EmployeeAttendenceController::class);
     Route::apiResource('employee-statuses', EmployeeStatusController::class);
     Route::apiResource('employee-designations', EmployeeDesignationController::class);
     Route::apiResource('employee-departments', EmployeeDepartmentController::class);
